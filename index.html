@@ -159,6 +159,161 @@
             background-color: #0770c4;
         }
 
+        /* Payment Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-form-container {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, #0984e3 0%, #6c5ce7 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .payment-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .close-payment {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .payment-body {
+            padding: 30px;
+        }
+
+        .payment-amount {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f1f1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2d3436;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #0984e3;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 25px;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .payment-submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #00b894;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .payment-submit-btn:hover {
+            background-color: #00a085;
+        }
+
+        .payment-submit-btn:disabled {
+            background-color: #b2bec3;
+            cursor: not-allowed;
+        }
+
+        .payment-security-note {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #eef7ff;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #0984e3;
+        }
+
+        .payment-security-note i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
         .cart-sidebar {
             position: fixed;
             top: 0;
@@ -293,6 +448,11 @@
             background-color: #00a085;
         }
 
+        .checkout-btn:disabled {
+            background-color: #b2bec3;
+            cursor: not-allowed;
+        }
+
         /* Security Section for Firstoken Testing */
         .security-section {
             background-color: white;
@@ -369,188 +529,334 @@
             border-top: 1px solid #eaeaea;
         }
 
+        /* Form validation styles */
+        .form-input.error {
+            border-color: #e74c3c;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-input.success {
+            border-color: #00b894;
+        }
+
+        /* Payment processing animation */
+        .processing-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 12px;
+        }
+
+        .processing-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0984e3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
-
+            
             .cart-sidebar {
                 width: 100%;
                 right: -100%;
             }
-
+            
             .hero h1 {
                 font-size: 28px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .payment-form-container {
+                width: 95%;
+                margin: 20px;
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-<div class="container">
-    <header>
-        <div class="logo">
-            <i class="fas fa-store"></i>
-            <span style="margin-left: 10px;">Simple<span>Shop</span></span>
-        </div>
-        <div class="cart-icon" id="cartIcon">
-            <i class="fas fa-shopping-cart"></i>
-            <div class="cart-count" id="cartCount">0</div>
-        </div>
-    </header>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span style="margin-left: 10px;">Simple<span>Shop</span></span>
+            </div>
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <div class="cart-count" id="cartCount">0</div>
+            </div>
+        </header>
 
-    <div class="hero">
-        <h1>Discover Amazing Products</h1>
-        <p>Secure shopping with Firstoken Monitor protection</p>
-    </div>
-
-    <div class="product-grid" id="productGrid">
-        <!-- Products will be loaded here by JavaScript -->
-    </div>
-
-    <!-- Security Section for Firstoken Testing -->
-    <div class="security-section">
-        <h2><i class="fas fa-shield-alt"></i> Firstoken Monitor Testing</h2>
-        <p>Test the integration with Firstoken Monitor according to the API documentation. These buttons simulate actions that would be monitored for security threats.</p>
-
-        <div class="monitor-buttons">
-            <button class="monitor-btn" id="simulatePayment">Simulate Payment Process</button>
-            <button class="monitor-btn" id="testCSPViolation">Test CSP Violation Detection</button>
-            <button class="monitor-btn" id="loadExternalScript">Load External Script (Blocked)</button>
-            <button class="monitor-btn" id="sendSensitiveData">Send Sensitive Data Test</button>
-            <button class="monitor-btn" id="clearLogs">Clear Test Logs</button>
+        <div class="hero">
+            <h1>Discover Amazing Products</h1>
+            <p>Secure shopping with Firstoken Monitor protection</p>
         </div>
 
-        <div class="test-log" id="testLog">
-            <div class="log-entry"><span class="log-time">[System]</span> Firstoken Monitor testing console ready</div>
-            <div class="log-entry"><span class="log-time">[System]</span> Add products to cart and test checkout security</div>
+        <div class="product-grid" id="productGrid">
+            <!-- Products will be loaded here by JavaScript -->
         </div>
 
-        <p style="margin-top: 15px; font-size: 14px; color: #636e72;">
-            <i class="fas fa-info-circle"></i> According to the documentation, CSP directives control what resources can be loaded and executed. Firstoken Monitor provides real-time detection of attacks like Magecart and web skimming.
-        </p>
+        <!-- Security Section for Firstoken Testing -->
+        <div class="security-section">
+            <h2><i class="fas fa-shield-alt"></i> Firstoken Monitor Testing</h2>
+            <p>Test the integration with Firstoken Monitor according to the API documentation. These buttons simulate actions that would be monitored for security threats.</p>
+            
+            <div class="monitor-buttons">
+                <button class="monitor-btn" id="simulatePayment">Simulate Payment Process</button>
+                <button class="monitor-btn" id="testCSPViolation">Test CSP Violation Detection</button>
+                <button class="monitor-btn" id="loadExternalScript">Load External Script (Blocked)</button>
+                <button class="monitor-btn" id="sendSensitiveData">Send Sensitive Data Test</button>
+                <button class="monitor-btn" id="testCardSkimmer">Test Card Skimmer Detection</button>
+                <button class="monitor-btn" id="clearLogs">Clear Test Logs</button>
+            </div>
+            
+            <div class="test-log" id="testLog">
+                <div class="log-entry"><span class="log-time">[System]</span> Firstoken Monitor testing console ready</div>
+                <div class="log-entry"><span class="log-time">[System]</span> Add products to cart and test checkout security</div>
+            </div>
+            
+            <p style="margin-top: 15px; font-size: 14px; color: #636e72;">
+                <i class="fas fa-info-circle"></i> According to the documentation, CSP directives control what resources can be loaded and executed. Firstoken Monitor provides real-time detection of attacks like Magecart and web skimming.
+            </p>
+        </div>
+
+        <footer>
+            <p>SimpleShop E-Commerce Demo | Protected by Firstoken Monitor | PCI DSS v4 Compliant</p>
+            <p style="font-size: 14px; margin-top: 10px;">This is a demonstration page for testing Firstoken Monitor implementation</p>
+        </footer>
     </div>
 
-    <footer>
-        <p>SimpleShop E-Commerce Demo | Protected by Firstoken Monitor | PCI DSS v4 Compliant</p>
-        <p style="font-size: 14px; margin-top: 10px;">This is a demonstration page for testing Firstoken Monitor implementation</p>
-    </footer>
-</div>
-
-<!-- Cart Sidebar -->
-<div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-        <h3>Your Shopping Cart</h3>
-        <button class="close-cart" id="closeCart">
-            <i class="fas fa-times"></i>
-        </button>
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Shopping Cart</h3>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded here -->
+            <p style="text-align: center; color: #636e72; margin-top: 30px;" id="emptyCartMessage">Your cart is empty</p>
+        </div>
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">$0.00</span>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn">Proceed to Secure Checkout</button>
     </div>
-    <div class="cart-items" id="cartItems">
-        <!-- Cart items will be loaded here -->
-        <p style="text-align: center; color: #636e72; margin-top: 30px;" id="emptyCartMessage">Your cart is empty</p>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-form-container">
+            <div class="payment-header">
+                <h2><i class="fas fa-lock"></i> Secure Payment</h2>
+                <button class="close-payment" id="closePayment">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="payment-body">
+                <div class="payment-amount">
+                    Total: <span id="paymentAmount">$0.00</span>
+                </div>
+                
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label class="form-label" for="cardName">Cardholder Name</label>
+                        <input type="text" id="cardName" class="form-input" placeholder="John Doe" maxlength="50" required>
+                        <div class="error-message" id="nameError">Please enter a valid name</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                        <div class="error-message" id="numberError">Please enter a valid 16-digit card number</div>
+                        <div class="card-icons">
+                            <div class="card-icon">VISA</div>
+                            <div class="card-icon">MC</div>
+                            <div class="card-icon">AMEX</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label class="form-label" for="cardExpiry">Expiry Date</label>
+                                <input type="text" id="cardExpiry" class="form-input" placeholder="MM/YY" maxlength="5" required>
+                                <div class="error-message" id="expiryError">Please enter a valid expiry date (MM/YY)</div>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label class="form-label" for="cardCVC">CVC</label>
+                                <input type="text" id="cardCVC" class="form-input" placeholder="123" maxlength="4" required>
+                                <div class="error-message" id="cvcError">Please enter a valid CVC (3-4 digits)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="billingEmail">Billing Email</label>
+                        <input type="email" id="billingEmail" class="form-input" placeholder="john.doe@example.com" required>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="payment-security-note">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Your payment is secured with Firstoken Monitor. All data is encrypted and protected against web skimming attacks.</span>
+                    </div>
+                    
+                    <div class="processing-overlay" id="processingOverlay">
+                        <div class="spinner"></div>
+                        <p>Processing payment...</p>
+                        <p style="font-size: 14px; color: #636e72; margin-top: 10px;">Firstoken Monitor scanning for threats</p>
+                    </div>
+                    
+                    <button type="submit" class="payment-submit-btn" id="submitPayment">
+                        <i class="fas fa-lock"></i> Pay Securely
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="cart-total">
-        <span>Total:</span>
-        <span id="cartTotal">$0.00</span>
-    </div>
-    <button class="checkout-btn" id="checkoutBtn">Proceed to Secure Checkout</button>
-</div>
 
-<script>
-    // Sample product data
-    const products = [
-        {
-            id: 1,
-            name: "Wireless Bluetooth Headphones",
-            description: "Premium noise-cancelling headphones with 30-hour battery life",
-            price: 129.99,
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            id: 2,
-            name: "Smart Fitness Watch",
-            description: "Track your workouts, heart rate, and sleep patterns",
-            price: 199.99,
-            image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            id: 3,
-            name: "Portable External SSD",
-            description: "1TB high-speed storage for all your files",
-            price: 149.99,
-            image: "https://images.unsplash.com/photo-1581344986782-0b2e8a8e1a7f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            id: 4,
-            name: "Ergonomic Office Chair",
-            description: "Adjustable chair with lumbar support for all-day comfort",
-            price: 299.99,
-            image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            id: 5,
-            name: "Digital Camera Kit",
-            description: "24MP camera with 18-55mm lens for beginners",
-            price: 599.99,
-            image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            id: 6,
-            name: "Mechanical Keyboard",
-            description: "RGB backlit keyboard with Cherry MX switches",
-            price: 89.99,
-            image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        }
-    ];
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "Wireless Bluetooth Headphones",
+                description: "Premium noise-cancelling headphones with 30-hour battery life",
+                price: 129.99,
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 2,
+                name: "Smart Fitness Watch",
+                description: "Track your workouts, heart rate, and sleep patterns",
+                price: 199.99,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 3,
+                name: "Portable External SSD",
+                description: "1TB high-speed storage for all your files",
+                price: 149.99,
+                image: "https://images.unsplash.com/photo-1581344986782-0b2e8a8e1a7f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 4,
+                name: "Ergonomic Office Chair",
+                description: "Adjustable chair with lumbar support for all-day comfort",
+                price: 299.99,
+                image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 5,
+                name: "Digital Camera Kit",
+                description: "24MP camera with 18-55mm lens for beginners",
+                price: 599.99,
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 6,
+                name: "Mechanical Keyboard",
+                description: "RGB backlit keyboard with Cherry MX switches",
+                price: 89.99,
+                image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            }
+        ];
 
-    // Shopping cart state
-    let cart = [];
-    let testLogEntries = [];
+        // Shopping cart state
+        let cart = [];
+        let testLogEntries = [];
 
-    // DOM elements
-    const productGrid = document.getElementById('productGrid');
-    const cartIcon = document.getElementById('cartIcon');
-    const cartCount = document.getElementById('cartCount');
-    const cartSidebar = document.getElementById('cartSidebar');
-    const closeCart = document.getElementById('closeCart');
-    const cartItems = document.getElementById('cartItems');
-    const emptyCartMessage = document.getElementById('emptyCartMessage');
-    const cartTotal = document.getElementById('cartTotal');
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    const testLog = document.getElementById('testLog');
+        // DOM elements
+        const productGrid = document.getElementById('productGrid');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCount = document.getElementById('cartCount');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const emptyCartMessage = document.getElementById('emptyCartMessage');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const testLog = document.getElementById('testLog');
+        const paymentModal = document.getElementById('paymentModal');
+        const closePayment = document.getElementById('closePayment');
+        const paymentForm = document.getElementById('paymentForm');
+        const paymentAmount = document.getElementById('paymentAmount');
+        const processingOverlay = document.getElementById('processingOverlay');
 
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', function() {
-        renderProducts();
-        updateCart();
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+            updateCart();
+            
+            // Event listeners
+            cartIcon.addEventListener('click', toggleCart);
+            closeCart.addEventListener('click', toggleCart);
+            checkoutBtn.addEventListener('click', openPaymentModal);
+            closePayment.addEventListener('click', closePaymentModal);
+            paymentForm.addEventListener('submit', processPayment);
+            
+            // Firstoken testing buttons
+            document.getElementById('simulatePayment').addEventListener('click', simulatePayment);
+            document.getElementById('testCSPViolation').addEventListener('click', testCSPViolation);
+            document.getElementById('loadExternalScript').addEventListener('click', loadExternalScript);
+            document.getElementById('sendSensitiveData').addEventListener('click', sendSensitiveData);
+            document.getElementById('testCardSkimmer').addEventListener('click', testCardSkimmer);
+            document.getElementById('clearLogs').addEventListener('click', clearLogs);
+            
+            // Form validation
+            setupFormValidation();
+            
+            // Log initial CSP info based on documentation
+            addLogEntry("[CSP Info] Default CSP directives from documentation: script-src 'self' https://captures.firstoken.co", "info");
+            addLogEntry("[CSP Info] connect-src includes: 'self' https://api.firstoken.com", "info");
+            addLogEntry("[CSP Info] Firstoken Monitor helps comply with PCI DSS v4 requirement 11.6.1", "info");
+        });
 
-        // Event listeners
-        cartIcon.addEventListener('click', toggleCart);
-        closeCart.addEventListener('click', toggleCart);
-        checkoutBtn.addEventListener('click', proceedToCheckout);
-
-        // Firstoken testing buttons
-        document.getElementById('simulatePayment').addEventListener('click', simulatePayment);
-        document.getElementById('testCSPViolation').addEventListener('click', testCSPViolation);
-        document.getElementById('loadExternalScript').addEventListener('click', loadExternalScript);
-        document.getElementById('sendSensitiveData').addEventListener('click', sendSensitiveData);
-        document.getElementById('clearLogs').addEventListener('click', clearLogs);
-
-        // Log initial CSP info based on documentation
-        addLogEntry("[CSP Info] Default CSP directives from documentation: script-src 'self' https://captures.firstoken.co", "info");
-        addLogEntry("[CSP Info] connect-src includes: 'self' https://api.firstoken.com", "info");
-        addLogEntry("[CSP Info] Firstoken Monitor helps comply with PCI DSS v4 requirement 11.6.1", "info");
-    });
-
-    // Render products to the page
-    function renderProducts() {
-        productGrid.innerHTML = '';
-
-        products.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-
-            productCard.innerHTML = `
+        // Render products to the page
+        function renderProducts() {
+            productGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                productCard.innerHTML = `
                     <div class="product-image">
                         <img src="${product.image}" alt="${product.name}">
                     </div>
@@ -563,70 +869,72 @@
                         </button>
                     </div>
                 `;
-
-            productGrid.appendChild(productCard);
-        });
-
-        // Add event listeners to "Add to Cart" buttons
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = parseInt(this.getAttribute('data-id'));
-                addToCart(productId);
-                addLogEntry(`[Cart] Product ID ${productId} added to cart`, "cart");
+                
+                productGrid.appendChild(productCard);
             });
-        });
-    }
-
-    // Add product to cart
-    function addToCart(productId) {
-        const product = products.find(p => p.id === productId);
-
-        if (!product) return;
-
-        // Check if product is already in cart
-        const existingItem = cart.find(item => item.id === productId);
-
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                image: product.image,
-                quantity: 1
+            
+            // Add event listeners to "Add to Cart" buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                    addLogEntry(`[Cart] Product ID ${productId} added to cart`, "cart");
+                });
             });
         }
 
-        updateCart();
-
-        // Show cart sidebar when adding first item
-        if (cart.length === 1) {
-            cartSidebar.classList.add('active');
+        // Add product to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (!product) return;
+            
+            // Check if product is already in cart
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            
+            // Show cart sidebar when adding first item
+            if (cart.length === 1) {
+                cartSidebar.classList.add('active');
+            }
         }
-    }
 
-    // Update cart UI
-    function updateCart() {
-        // Update cart count
-        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-        cartCount.textContent = totalItems;
-
-        // Update cart items
-        if (cart.length === 0) {
-            emptyCartMessage.style.display = 'block';
-            cartItems.innerHTML = '';
-        } else {
-            emptyCartMessage.style.display = 'none';
-
-            let cartHTML = '';
-            let totalPrice = 0;
-
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                totalPrice += itemTotal;
-
-                cartHTML += `
+        // Update cart UI
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update cart items
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartItems.innerHTML = '';
+                checkoutBtn.disabled = true;
+            } else {
+                emptyCartMessage.style.display = 'none';
+                checkoutBtn.disabled = false;
+                
+                let cartHTML = '';
+                let totalPrice = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    totalPrice += itemTotal;
+                    
+                    cartHTML += `
                         <div class="cart-item" data-id="${item.id}">
                             <div class="cart-item-img">
                                 <img src="${item.image}" alt="${item.name}">
@@ -647,150 +955,409 @@
                             </div>
                         </div>
                     `;
-            });
-
-            cartItems.innerHTML = cartHTML;
-            cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
-
-            // Add event listeners to cart buttons
-            document.querySelectorAll('.decrease-quantity').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productId = parseInt(this.getAttribute('data-id'));
-                    updateQuantity(productId, -1);
                 });
-            });
-
-            document.querySelectorAll('.increase-quantity').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productId = parseInt(this.getAttribute('data-id'));
-                    updateQuantity(productId, 1);
+                
+                cartItems.innerHTML = cartHTML;
+                cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+                
+                // Add event listeners to cart buttons
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        updateQuantity(productId, -1);
+                    });
                 });
-            });
-
-            document.querySelectorAll('.remove-item').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productId = parseInt(this.getAttribute('data-id'));
-                    removeFromCart(productId);
-                    addLogEntry(`[Cart] Product ID ${productId} removed from cart`, "cart");
+                
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        updateQuantity(productId, 1);
+                    });
                 });
-            });
+                
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        removeFromCart(productId);
+                        addLogEntry(`[Cart] Product ID ${productId} removed from cart`, "cart");
+                    });
+                });
+            }
         }
-    }
 
-    // Update item quantity
-    function updateQuantity(productId, change) {
-        const item = cart.find(item => item.id === productId);
+        // Update item quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            
+            if (!item) return;
+            
+            item.quantity += change;
+            
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                updateCart();
+            }
+        }
 
-        if (!item) return;
-
-        item.quantity += change;
-
-        if (item.quantity <= 0) {
-            removeFromCart(productId);
-        } else {
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
             updateCart();
         }
-    }
 
-    // Remove item from cart
-    function removeFromCart(productId) {
-        cart = cart.filter(item => item.id !== productId);
-        updateCart();
-    }
-
-    // Toggle cart sidebar
-    function toggleCart() {
-        cartSidebar.classList.toggle('active');
-    }
-
-    // Proceed to checkout
-    function proceedToCheckout() {
-        if (cart.length === 0) {
-            alert("Your cart is empty!");
-            return;
+        // Toggle cart sidebar
+        function toggleCart() {
+            cartSidebar.classList.toggle('active');
         }
 
-        addLogEntry("[Checkout] Starting secure checkout process", "payment");
-        addLogEntry("[Checkout] Connecting to payment gateway...", "payment");
-        addLogEntry("[Checkout] Firstoken Monitor scanning for threats...", "security");
-
-        // Simulate payment processing
-        setTimeout(() => {
-            addLogEntry("[Checkout] Payment authorized successfully", "payment");
-            addLogEntry("[Checkout] Order confirmed! Thank you for your purchase.", "payment");
-
-            // Clear cart after successful checkout
-            cart = [];
-            updateCart();
-
-            alert("Payment successful! Thank you for your order.");
-        }, 1500);
-    }
-
-    // Firstoken Testing Functions
-    function simulatePayment() {
-        addLogEntry("[Payment Test] Simulating payment process...", "payment");
-        addLogEntry("[Payment Test] Sending transaction to https://api.firstoken.com", "payment");
-        addLogEntry("[Payment Test] Firstoken Monitor verifying CSP compliance", "security");
-        addLogEntry("[Payment Test] All payment resources loaded from trusted sources", "security");
-    }
-
-    function testCSPViolation() {
-        addLogEntry("[CSP Test] Attempting to load unauthorized script...", "security");
-        addLogEntry("[CSP Test] Violation detected: script-src 'self' https://captures.firstoken.co", "security");
-        addLogEntry("[CSP Test] Report sent to https://monitor.firstoken.co/v1/pages/...", "security");
-        addLogEntry("[CSP Test] CSP prevented potential XSS attack", "security");
-    }
-
-    function loadExternalScript() {
-        addLogEntry("[External Script] Attempting to load external script...", "warning");
-
-        // This would normally trigger a CSP violation
-        try {
-            // This simulates what an attacker might try
-            const script = document.createElement('script');
-            script.src = "https://malicious.example.com/bad-script.js";
-            document.head.appendChild(script);
-            addLogEntry("[External Script] Script loaded (in real scenario this would be blocked by CSP)", "warning");
-        } catch (e) {
-            addLogEntry(`[External Script] Error: ${e.message}`, "error");
+        // Open payment modal
+        function openPaymentModal() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            
+            // Calculate total
+            const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            paymentAmount.textContent = `$${totalPrice.toFixed(2)}`;
+            
+            // Show modal
+            paymentModal.classList.add('active');
+            addLogEntry("[Payment] Payment modal opened", "payment");
+            addLogEntry("[Security] Firstoken Monitor active - scanning for card skimmers", "security");
         }
-    }
 
-    function sendSensitiveData() {
-        addLogEntry("[Data Test] Attempting to send sensitive data...", "security");
-        addLogEntry("[Data Test] Firstoken Monitor checking connect-src directive", "security");
-        addLogEntry("[Data Test] Allowed domains: 'self' https://api.firstoken.com", "security");
-        addLogEntry("[Data Test] Data exfiltration attempt blocked by CSP", "security");
-    }
+        // Close payment modal
+        function closePaymentModal() {
+            paymentModal.classList.remove('active');
+            resetForm();
+        }
 
-    function addLogEntry(message, type = "info") {
-        const now = new Date();
-        const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        // Setup form validation
+        function setupFormValidation() {
+            // Card number formatting
+            document.getElementById('cardNumber').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 16) value = value.substr(0, 16);
+                
+                // Add spaces every 4 digits
+                value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                e.target.value = value;
+                
+                // Validate
+                validateCardNumber(value);
+            });
+            
+            // Expiry date formatting
+            document.getElementById('cardExpiry').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 4) value = value.substr(0, 4);
+                
+                if (value.length >= 2) {
+                    value = value.replace(/(\d{2})(\d+)/, '$1/$2');
+                }
+                e.target.value = value;
+                
+                // Validate
+                validateExpiryDate(value);
+            });
+            
+            // CVC formatting
+            document.getElementById('cardCVC').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 4) value = value.substr(0, 4);
+                e.target.value = value;
+                
+                // Validate
+                validateCVC(value);
+            });
+            
+            // Name validation
+            document.getElementById('cardName').addEventListener('blur', function() {
+                validateName(this.value);
+            });
+            
+            // Email validation
+            document.getElementById('billingEmail').addEventListener('blur', function() {
+                validateEmail(this.value);
+            });
+        }
 
-        const logEntry = document.createElement('div');
-        logEntry.className = 'log-entry';
+        // Validation functions
+        function validateCardNumber(number) {
+            const cleaned = number.replace(/\s/g, '');
+            const errorElement = document.getElementById('numberError');
+            const inputElement = document.getElementById('cardNumber');
+            
+            if (cleaned.length !== 16 || !/^\d+$/.test(cleaned)) {
+                inputElement.classList.add('error');
+                inputElement.classList.remove('success');
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            // Luhn algorithm check (simplified)
+            let sum = 0;
+            let isEven = false;
+            
+            for (let i = cleaned.length - 1; i >= 0; i--) {
+                let digit = parseInt(cleaned[i]);
+                
+                if (isEven) {
+                    digit *= 2;
+                    if (digit > 9) digit -= 9;
+                }
+                
+                sum += digit;
+                isEven = !isEven;
+            }
+            
+            const isValid = sum % 10 === 0;
+            
+            if (isValid) {
+                inputElement.classList.remove('error');
+                inputElement.classList.add('success');
+                errorElement.style.display = 'none';
+                return true;
+            } else {
+                inputElement.classList.add('error');
+                inputElement.classList.remove('success');
+                errorElement.style.display = 'block';
+                return false;
+            }
+        }
 
-        let icon = "ℹ️";
-        if (type === "security") icon = "🛡️";
-        if (type === "payment") icon = "💳";
-        if (type === "cart") icon = "🛒";
-        if (type === "warning") icon = "⚠️";
-        if (type === "error") icon = "❌";
+        function validateExpiryDate(date) {
+            const errorElement = document.getElementById('expiryError');
+            const inputElement = document.getElementById('cardExpiry');
+            
+            if (!/^\d{2}\/\d{2}$/.test(date)) {
+                inputElement.classList.add('error');
+                inputElement.classList.remove('success');
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            const [month, year] = date.split('/').map(Number);
+            const currentYear = new Date().getFullYear() % 100;
+            const currentMonth = new Date().getMonth() + 1;
+            
+            if (month < 1 || month > 12 || year < currentYear || (year === currentYear && month < currentMonth)) {
+                inputElement.classList.add('error');
+                inputElement.classList.remove('success');
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            inputElement.classList.remove('error');
+            inputElement.classList.add('success');
+            errorElement.style.display = 'none';
+            return true;
+        }
 
-        logEntry.innerHTML = `<span class="log-time">[${timeString}]</span> ${icon} ${message}`;
+        function validateCVC(cvc) {
+            const errorElement = document.getElementById('cvcError');
+            const inputElement = document.getElementById('cardCVC');
+            
+            if (!/^\d{3,4}$/.test(cvc)) {
+                inputElement.classList.add('error');
+                inputElement.classList.remove('success');
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            inputElement.classList.remove('error');
+            inputElement.classList.add('success');
+            errorElement.style.display = 'none';
+            return true;
+        }
 
-        testLogEntries.push(logEntry);
-        testLog.appendChild(logEntry);
+        function validateName(name) {
+            const errorElement = document.getElementById('nameError');
+            const inputElement = document.getElementById('cardName');
+            
+            if (!name || name.trim().length < 2) {
+                inputElement.classList.add('error');
+                inputElement.classList.remove('success');
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            inputElement.classList.remove('error');
+            inputElement.classList.add('success');
+            errorElement.style.display = 'none';
+            return true;
+        }
 
-        // Scroll to bottom
-        testLog.scrollTop = testLog.scrollHeight;
-    }
+        function validateEmail(email) {
+            const errorElement = document.getElementById('emailError');
+            const inputElement = document.getElementById('billingEmail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!email || !emailRegex.test(email)) {
+                inputElement.classList.add('error');
+                inputElement.classList.remove('success');
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            inputElement.classList.remove('error');
+            inputElement.classList.add('success');
+            errorElement.style.display = 'none';
+            return true;
+        }
 
-    function clearLogs() {
-        testLogEntries = [];
-        testLog.innerHTML = '<div class="log-entry"><span class="log-time">[System]</span> Logs cleared</div>';
-    }
-</script>
+        function validateForm() {
+            const isValidCardNumber = validateCardNumber(document.getElementById('cardNumber').value);
+            const isValidExpiry = validateExpiryDate(document.getElementById('cardExpiry').value);
+            const isValidCVC = validateCVC(document.getElementById('cardCVC').value);
+            const isValidName = validateName(document.getElementById('cardName').value);
+            const isValidEmail = validateEmail(document.getElementById('billingEmail').value);
+            
+            return isValidCardNumber && isValidExpiry && isValidCVC && isValidName && isValidEmail;
+        }
+
+        function resetForm() {
+            paymentForm.reset();
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.classList.remove('error', 'success');
+            });
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+            });
+        }
+
+        // Process payment
+        function processPayment(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                addLogEntry("[Payment Error] Form validation failed", "error");
+                alert("Please fix the errors in the form before submitting.");
+                return;
+            }
+            
+            // Show processing overlay
+            processingOverlay.classList.add('active');
+            
+            // Simulate payment processing with Firstoken Monitor
+            addLogEntry("[Payment] Starting secure payment process...", "payment");
+            addLogEntry("[Security] Firstoken Monitor scanning for web skimming threats...", "security");
+            addLogEntry("[Security] Checking CSP compliance for payment page...", "security");
+            
+            // Get payment details (in a real app, this would be encrypted and sent to a secure endpoint)
+            const cardNumber = document.getElementById('cardNumber').value;
+            const lastFour = cardNumber.replace(/\s/g, '').slice(-4);
+            const email = document.getElementById('billingEmail').value;
+            
+            addLogEntry(`[Payment] Processing payment for card ending in ${lastFour}`, "payment");
+            addLogEntry(`[Payment] Billing email: ${email}`, "payment");
+            addLogEntry("[Payment] Connecting to payment gateway via https://api.firstoken.com", "payment");
+            
+            // Simulate API call to payment processor
+            setTimeout(() => {
+                processingOverlay.classList.remove('active');
+                
+                // Simulate successful payment
+                addLogEntry("[Payment] Payment authorized successfully", "payment");
+                addLogEntry("[Security] Firstoken Monitor: No threats detected", "security");
+                addLogEntry("[Payment] Transaction completed securely", "payment");
+                
+                // Show success message
+                alert(`Payment successful! A confirmation has been sent to ${email}`);
+                
+                // Clear cart and close modals
+                cart = [];
+                updateCart();
+                closePaymentModal();
+                toggleCart(); // Close cart sidebar
+                
+                // Log the transaction
+                const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+                addLogEntry(`[Payment] Order confirmed. Thank you for your purchase!`, "payment");
+                
+            }, 3000);
+        }
+
+        // Firstoken Testing Functions
+        function simulatePayment() {
+            addLogEntry("[Payment Test] Simulating payment process...", "payment");
+            addLogEntry("[Payment Test] Sending transaction to https://api.firstoken.com", "payment");
+            addLogEntry("[Payment Test] Firstoken Monitor verifying CSP compliance", "security");
+            addLogEntry("[Payment Test] All payment resources loaded from trusted sources", "security");
+        }
+
+        function testCSPViolation() {
+            addLogEntry("[CSP Test] Attempting to load unauthorized script...", "security");
+            addLogEntry("[CSP Test] Violation detected: script-src 'self' https://captures.firstoken.co", "security");
+            addLogEntry("[CSP Test] Report sent to https://monitor.firstoken.co/v1/pages/...", "security");
+            addLogEntry("[CSP Test] CSP prevented potential XSS attack", "security");
+        }
+
+        function loadExternalScript() {
+            addLogEntry("[External Script] Attempting to load external script...", "warning");
+            
+            // This would normally trigger a CSP violation
+            try {
+                // This simulates what an attacker might try
+                const script = document.createElement('script');
+                script.src = "https://malicious.example.com/bad-script.js";
+                document.head.appendChild(script);
+                addLogEntry("[External Script] Script loaded (in real scenario this would be blocked by CSP)", "warning");
+            } catch (e) {
+                addLogEntry(`[External Script] Error: ${e.message}`, "error");
+            }
+        }
+
+        function sendSensitiveData() {
+            addLogEntry("[Data Test] Attempting to send sensitive data...", "security");
+            addLogEntry("[Data Test] Firstoken Monitor checking connect-src directive", "security");
+            addLogEntry("[Data Test] Allowed domains: 'self' https://api.firstoken.com", "security");
+            addLogEntry("[Data Test] Data exfiltration attempt blocked by CSP", "security");
+        }
+
+        function testCardSkimmer() {
+            addLogEntry("[Skimmer Test] Simulating card skimming attack...", "security");
+            addLogEntry("[Skimmer Test] Firstoken Monitor detected suspicious script behavior", "security");
+            addLogEntry("[Skimmer Test] Alert: Potential Magecart attack detected", "security");
+            addLogEntry("[Skimmer Test] Firstoken Monitor blocked skimmer and sent report", "security");
+        }
+
+        function addLogEntry(message, type = "info") {
+            const now = new Date();
+            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            let icon = "ℹ️";
+            if (type === "security") icon = "🛡️";
+            if (type === "payment") icon = "💳";
+            if (type === "cart") icon = "🛒";
+            if (type === "warning") icon = "⚠️";
+            if (type === "error") icon = "❌";
+            
+            logEntry.innerHTML = `<span class="log-time">[${timeString}]</span> ${icon} ${message}`;
+            
+            testLogEntries.push(logEntry);
+            testLog.appendChild(logEntry);
+            
+            // Scroll to bottom
+            testLog.scrollTop = testLog.scrollHeight;
+        }
+
+        function clearLogs() {
+            testLogEntries = [];
+            testLog.innerHTML = '<div class="log-entry"><span class="log-time">[System]</span> Logs cleared</div>';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === paymentModal) {
+                closePaymentModal();
+            }
+        });
+    </script>
 </body>
 </html>
