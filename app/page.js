@@ -46,7 +46,7 @@ export default function Home() {
 						title: "Smart Watch Pro",
 						description: "Advanced smartwatch with health monitoring, GPS, and water resistance up to 50 meters.",
 						price: 349.99,
-						image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w-400&h=300&fit=crop",
+						image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop",
 					},
 					{
 						id: 3,
@@ -67,7 +67,7 @@ export default function Home() {
 						title: "Wireless Earbuds",
 						description: "True wireless earbuds with charging case and touch controls.",
 						price: 129.99,
-						image: "https://images.unsplash.com/photo-1598335625390-d7f2ab643382?w=400&h=300&fit=crop",
+						image: "https://images.unsplash.com/photo-1612444530583-c2eeaa2dde6e?w=400&h=300&fit=crop",
 					},
 					{
 						id: 6,
