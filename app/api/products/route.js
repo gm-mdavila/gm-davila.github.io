@@ -42,7 +42,7 @@ export async function GET() {
             title: "Wireless Earbuds",
             description: "True wireless earbuds with charging case and touch controls.",
             price: 129.99,
-            image: "https://images.unsplash.com/photo-1590658165737-15a047b8b5e8?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1598335625390-d7f2ab643382?w=400&h=300&fit=crop",
             category: "Electronics",
             stock: 100
         },
