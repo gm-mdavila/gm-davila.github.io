@@ -14,7 +14,8 @@ export async function middleware(request) {
 	const response = NextResponse.next();
 	const token = await getReportToken();
 	const reportUri = `${MONITOR_URL.replace(/\?.*$/, "")}?t=${token}`;
-	const csp = "default-src 'self'; " + "script-src 'self' 'unsafe-inline'; " + "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; " + "img-src 'self' data: https://images.unsplash.com; " + "connect-src 'self'; " + "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " + "object-src 'none'; base-uri 'self'; form-action 'self'; " + "frame-ancestors 'self'; frame-src 'none'; " + "child-src 'self'; worker-src 'none'; " + `report-uri ${reportUri}`;
+	// Menos restrictiva: script-src con unsafe-eval (Next dev); connect-src con ws/wss (HMR).
+	const csp = "default-src 'self'; " + "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " + "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; " + "img-src 'self' data: https://images.unsplash.com; " + "connect-src 'self' ws: wss:; " + "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; " + "object-src 'none'; base-uri 'self'; form-action 'self'; " + "frame-ancestors 'self'; frame-src 'none'; " + "child-src 'self'; worker-src 'none'; " + `report-uri ${reportUri}`;
 	response.headers.set("Content-Security-Policy", csp);
 	return response;
 }
