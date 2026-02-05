@@ -30,7 +30,8 @@ const nextConfig = {
 		//   report-uri /api/csp-report?t=${token}
 		// `.replace(/\s+/g, ' ').trim();
 
-		const csp = `default-src 'self'; ` + `script-src 'self' https://captures.firstoken.co https://api.firstoken.co; ` + `style-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com; ` + `img-src 'self' data: https://images.unsplash.com; ` + `connect-src 'self' https://api.firstoken.co; ` + `font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; ` + `object-src 'none'; ` + `base-uri 'self'; ` + `form-action 'self'; ` + `frame-ancestors 'self'; ` + `frame-src https://captures.firstoken.co; ` + `child-src 'self'; ` + `worker-src 'none'; ` + `report-uri https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26?t=${token}`;
+		// Next.js requiere 'unsafe-inline' en script-src y style-src para hidratación y estilos
+		const csp = `default-src 'self'; ` + `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://captures.firstoken.co https://api.firstoken.co; ` + `style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; ` + `img-src 'self' data: https://images.unsplash.com; ` + `connect-src 'self' https://api.firstoken.co; ` + `font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; ` + `object-src 'none'; ` + `base-uri 'self'; ` + `form-action 'self'; ` + `frame-ancestors 'self'; ` + `frame-src https://captures.firstoken.co; ` + `child-src 'self'; ` + `worker-src 'none'; ` + `report-uri https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26?t=${token}`;
 
 		return [
 			{
