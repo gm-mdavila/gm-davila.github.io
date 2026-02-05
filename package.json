@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/gm-mdavila/gm-davila.github.io#readme",
   "dependencies": {
+    "jose": "^6.1.3",
     "jsonwebtoken": "^9.0.3",
     "next": "^14.0.4",
     "react": "^18.3.1",
