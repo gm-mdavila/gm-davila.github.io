@@ -11,28 +11,26 @@ const nextConfig = {
 		],
 	},
 
-	// ADD THIS SECTION for CSP headers
+	// CSP headers – nivel de endurecimiento vía env:
+	// CSP_STRICT=true  → política estricta (sin unsafe-inline/unsafe-eval; los tests CSP disparan reportes; la app puede fallar sin nonces).
+	// Por defecto: política endurecida sin 'unsafe-eval'; con 'unsafe-inline' para que Next siga funcionando.
 	async headers() {
 		const token = generateToken();
+		const strict = process.env.CSP_STRICT === "true";
 
-		// Create CSP policy - must allow your external resources!
-		//     const csp = `
-		//   default-src 'self';
-		//   script-src 'self' 'unsafe-inline' 'unsafe-eval';
-		//   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
-		//   img-src 'self' data: https://images.unsplash.com https:;
-		//   font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-		//   connect-src 'self' ws://localhost:3003 ws://localhost:3000;
-		//   frame-ancestors 'self';
-		//   frame-src 'self';
-		//   child-src 'self';
-		//   worker-src 'none';
-		//   report-uri /api/csp-report?t=${token}
-		// `.replace(/\s+/g, ' ').trim();
+		const reportUri = `report-uri https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26?t=${token}`;
 
-		// Next.js requiere 'unsafe-inline' en script-src y style-src para hidratación y estilos
-		const csp = `default-src 'self'; ` + `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://captures.firstoken.co https://api.firstoken.co; ` + `style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; ` + `img-src 'self' data: https://images.unsplash.com; ` + `connect-src 'self' https://api.firstoken.co; ` + `font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; ` + `object-src 'none'; ` + `base-uri 'self'; ` + `form-action 'self'; ` + `frame-ancestors 'self'; ` + `frame-src https://captures.firstoken.co; ` + `child-src 'self'; ` + `worker-src 'none'; ` + `report-uri https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26?t=${token}`;
+		// Política endurecida: sin unsafe-eval. script-src mantiene 'unsafe-inline' para hidratación de Next.js.
+		const scriptSrcRelaxed = "script-src 'self' 'unsafe-inline' https://captures.firstoken.co https://api.firstoken.co; ";
+		// Política estricta: sin unsafe-inline ni unsafe-eval (útil para probar reportes CSP; la app puede romperse sin nonces).
+		const scriptSrcStrict = "script-src 'self' https://captures.firstoken.co https://api.firstoken.co; ";
 
+		const scriptSrc = strict ? scriptSrcStrict : scriptSrcRelaxed;
+		const styleSrc = strict ? "style-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com; " : "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; ";
+
+		const csp = "default-src 'self'; " + scriptSrc + styleSrc + "img-src 'self' data: https://images.unsplash.com; " + "connect-src 'self' https://api.firstoken.co; " + "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; " + "object-src 'none'; " + "base-uri 'self'; " + "form-action 'self'; " + "frame-ancestors 'self'; " + "frame-src https://captures.firstoken.co; " + "child-src 'self'; " + "worker-src 'none'; " + reportUri;
+
+		// Para política estricta (y que los tests en /csp-tests disparen más reportes): CSP_STRICT=true npm run dev
 		return [
 			{
 				// Apply to ALL routes
