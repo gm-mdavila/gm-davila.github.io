@@ -1,0 +1,29 @@
+{
+  "name": "gm-davila.github.io",
+  "version": "1.0.0",
+  "description": "This is a page for testing propose",
+  "main": "next.config.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gm-mdavila/gm-davila.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gm-mdavila/gm-davila.github.io/issues"
+  },
+  "homepage": "https://github.com/gm-mdavila/gm-davila.github.io#readme",
+  "dependencies": {
+    "next": "^14.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^4.12.0"
+  }
+}
