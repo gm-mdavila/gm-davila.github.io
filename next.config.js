@@ -12,7 +12,7 @@ const nextConfig = {
 
     // ADD THIS SECTION for CSP headers
     async headers() {
-        const token = Date.now();
+        const token = generateToken();
 
         // Create CSP policy - must allow your external resources!
     //     const csp = `
@@ -42,7 +42,7 @@ const nextConfig = {
             `frame-src https://captures.firstoken.co; ` +
             `child-src 'self'; ` +
             `worker-src 'none'; ` +
-            `report-uri /api/csp-report?t=${token}`;
+            `report-uri  https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26?t=${token}`;
 
         return [
             {
@@ -74,5 +74,16 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
 }
+// Function to generate JWT token
+function generateToken() {
+    return jwt.sign(
+        { jwtPayload: {} },
+        SECRET_KEY,
+        { expiresIn: '15m' }
+    );
+}
+const SECRET_KEY = 'vAFmOFMDdZQsByJaDyfYGirULoBGgxgb'; // From Step 1
+const MONITOR_URL = 'https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26'; // From Step 2
+
 
 module.exports = nextConfig;
