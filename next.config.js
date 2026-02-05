@@ -43,7 +43,7 @@ const nextConfig = {
             `frame-src https://captures.firstoken.co; ` +
             `child-src 'self'; ` +
             `worker-src 'none'; ` +
-            `report-uri  https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26?t=${token}`;
+            `report-uri https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26?t=${token}`;
 
         return [
             {
