@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
