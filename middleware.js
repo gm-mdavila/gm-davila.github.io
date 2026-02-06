@@ -1,10 +1,10 @@
-// app/middleware.js – CSP con la misma estructura que el helmet (SECRET_KEY + MONITOR_REPORT_URL)
+// middleware.js – CSP con la misma estructura que el helmet (SECRET_KEY + MONITOR_REPORT_URL)
 // En middleware corre Edge: jsonwebtoken no está disponible (usa Node crypto), por eso se usa jose.
 import { NextResponse } from "next/server";
 import { SignJWT } from "jose";
 
-const secretKey = process.env.SECRET_KEY;
-const monitorReportUrl = process.env.MONITOR_REPORT_URL;
+const secretKey = "vAFmOFMDdZQsByJaDyfYGirULoBGgxgb";
+const monitorReportUrl = "https://monitor.firstoken-staging.co/v1/monitor/29FB809332";
 
 async function generateToken() {
 	if (!secretKey) return "";
