@@ -1,13 +1,14 @@
-// app/middleware.js
+// app/middleware.js – CSP con la misma estructura que el helmet (SECRET_KEY + MONITOR_REPORT_URL)
+// En middleware corre Edge: jsonwebtoken no está disponible (usa Node crypto), por eso se usa jose.
 import { NextResponse } from "next/server";
 import { SignJWT } from "jose";
 
-// Monitor Firstoken – page 29FB809332. Opcional: MONITOR_PAGE_URL y MONITOR_PAGE_SECRET en .env.local
-const MONITOR_URL = process.env.MONITOR_PAGE_URL || "https://monitor.firstoken-staging.co/v1/pages/29FB809332";
-const MONITOR_SECRET = process.env.MONITOR_PAGE_SECRET || "vAFmOFMDdZQsByJaDyfYGirULoBGgxgb";
+const secretKey = process.env.SECRET_KEY;
+const monitorReportUrl = process.env.MONITOR_REPORT_URL;
 
-async function getReportToken() {
-	const secret = new TextEncoder().encode(MONITOR_SECRET);
+async function generateToken() {
+	if (!secretKey) return "";
+	const secret = new TextEncoder().encode(secretKey);
 	return new SignJWT({ payload: { time: Date.now() } }).setProtectedHeader({ alg: "HS256" }).setExpirationTime("1h").sign(secret);
 }
 
@@ -22,12 +23,17 @@ function getNonce() {
 
 export async function middleware(request) {
 	const nonce = getNonce();
-	const token = await getReportToken();
-	const reportUri = `${MONITOR_URL.replace(/\?.*$/, "")}?t=${token}`;
 
-	// Sin 'strict-dynamic': con strict-dynamic el script que inyecta el botón (desde React con nonce)
-	// se considera "confiable" y el script externo que añade queda permitido → no hay violación ni reporte.
-	const csp = "default-src 'self'; " + `script-src 'self' 'nonce-${nonce}'; ` + `style-src 'self' 'nonce-${nonce}' https://cdnjs.cloudflare.com https://fonts.googleapis.com; ` + "img-src 'self' data: https://images.unsplash.com; " + "connect-src 'self' ws: wss:; " + "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; " + "object-src 'none'; base-uri 'self'; form-action 'self'; " + "frame-ancestors 'self'; frame-src 'none'; child-src 'self'; worker-src 'none'; " + `report-uri ${reportUri}`;
+	const scriptSrc = ["'self'", `'nonce-${nonce}'`];
+	const styleSrc = ["'self'", `'nonce-${nonce}'`, "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"];
+	const imgSrc = ["'self'", "data:", "https://www.googletagmanager.com", "https://www.google-analytics.com", "https://fonts.googleapis.com", "https://img.firstoken.co", "https://flagcdn.com", "https://images.unsplash.com"];
+	const connectSrc = ["'self'", "ws:", "wss:", "https://www.googletagmanager.com", "https://www.google-analytics.com", "https://fonts.googleapis.com", "https://img.firstoken.co"];
+	const fontSrc = ["'self'", "data:", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"];
+
+	const sep = monitorReportUrl && monitorReportUrl.includes("?") ? "&" : "?";
+	const reportPart = monitorReportUrl && secretKey ? ` report-uri ${monitorReportUrl}${sep}t=${await generateToken()}` : "";
+
+	const csp = "default-src 'self'; " + `script-src ${scriptSrc.join(" ")}; ` + `style-src ${styleSrc.join(" ")}; ` + `img-src ${imgSrc.join(" ")}; ` + `connect-src ${connectSrc.join(" ")}; ` + `font-src ${fontSrc.join(" ")}; ` + "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src 'none'; child-src 'self'; worker-src 'none';" + reportPart;
 
 	const requestHeaders = new Headers(request.headers);
 	requestHeaders.set("x-nonce", nonce);
@@ -41,7 +47,6 @@ export async function middleware(request) {
 }
 
 export const config = {
-	// No aplicar CSP/nonce a API, estáticos ni prefetch (como recomienda Next.js para nonces).
 	matcher: [
 		{
 			source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
