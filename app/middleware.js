@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { SignJWT } from "jose";
 
-const MONITOR_URL = process.env.MONITOR_PAGE_URL || "https://monitor.firstoken-staging.co/v1/pages/10CBFDEB26";
+const MONITOR_URL = process.env.MONITOR_PAGE_URL || "https://monitor.firstoken-staging.co/v1/pages/29FB809332/";
 const MONITOR_SECRET = process.env.MONITOR_PAGE_SECRET || "vAFmOFMDdZQsByJaDyfYGirULoBGgxgb";
 
 async function getReportToken() {
