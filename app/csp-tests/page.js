@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const DOMINIO_NO_AUTORIZADO = "https://evil.example.com";
+// Dominio que SÍ resuelve (example.com) para que la CSP bloquee y envíe el reporte.
+// evil.example.com no resuelve (ERR_NAME_NOT_RESOLVED) y el reporte no se generaba.
+const DOMINIO_NO_AUTORIZADO = "https://example.com";
 
 const CASOS = [
 	{
