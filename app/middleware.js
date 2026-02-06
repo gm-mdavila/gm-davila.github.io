@@ -25,7 +25,9 @@ export async function middleware(request) {
 	const token = await getReportToken();
 	const reportUri = `${MONITOR_URL.replace(/\?.*$/, "")}?t=${token}`;
 
-	const csp = "default-src 'self'; " + `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'; ` + `style-src 'self' 'nonce-${nonce}' https://cdnjs.cloudflare.com https://fonts.googleapis.com; ` + "img-src 'self' data: https://images.unsplash.com; " + "connect-src 'self' ws: wss:; " + "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; " + "object-src 'none'; base-uri 'self'; form-action 'self'; " + "frame-ancestors 'self'; frame-src 'none'; child-src 'self'; worker-src 'none'; " + `report-uri ${reportUri}`;
+	// Sin 'strict-dynamic': con strict-dynamic el script que inyecta el botón (desde React con nonce)
+	// se considera "confiable" y el script externo que añade queda permitido → no hay violación ni reporte.
+	const csp = "default-src 'self'; " + `script-src 'self' 'nonce-${nonce}'; ` + `style-src 'self' 'nonce-${nonce}' https://cdnjs.cloudflare.com https://fonts.googleapis.com; ` + "img-src 'self' data: https://images.unsplash.com; " + "connect-src 'self' ws: wss:; " + "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; " + "object-src 'none'; base-uri 'self'; form-action 'self'; " + "frame-ancestors 'self'; frame-src 'none'; child-src 'self'; worker-src 'none'; " + `report-uri ${reportUri}`;
 
 	const requestHeaders = new Headers(request.headers);
 	requestHeaders.set("x-nonce", nonce);
